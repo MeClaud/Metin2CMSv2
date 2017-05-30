@@ -254,7 +254,7 @@ function getHighscore($start = 1, $stop = 10, $guilds = false)
 				$order++;
 				
 				$qryGetGuildEmpire = $conn->query("SELECT empire FROM player.player_index WHERE pid1 = {$g->master} OR pid2 = {$g->master} OR pid3 = {$g->master} OR pid4 = {$g->master}")->fetchObject()->empire;
-				$qryGetGuildMasterName = $onn->query("SELECT name FROM player.player WHERE id = {$g->master}")->fetchObject()->name;
+				$qryGetGuildMasterName = $conn->query("SELECT name FROM player.player WHERE id = {$g->master}")->fetchObject()->name;
 				$return[$g->id]['order'] = $order;
 				$return[$g->id]['name'] = $g->name;
 				$return[$g->id]['level'] = $g->level;
