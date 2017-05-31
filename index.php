@@ -47,7 +47,7 @@
 					<ul class="nav navbar-nav">
 						<li<?= ($url[0] == 'index') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>"><i class="fa fa-home"></i> Home</a></li>
 						<li<?= ($url[0] == 'highscore') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>highscore/"><i class="fa fa-table"></i> Clasament</a></li>
-						<li<?= ($url[0] == 'contact') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>download/"><i class="fa fa-envelope"></i> Descarcare</a></li>
+						<li<?= ($url[0] == 'contact') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>download/"><i class="fa fa-download"></i> Descarcare</a></li>
 						<li<?= ($url[0] == 'contact') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>forum/"><i class="fa fa-users"></i> Comunitate</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
