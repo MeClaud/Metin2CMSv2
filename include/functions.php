@@ -173,13 +173,14 @@ function get_user_info($user, $par){
 	global $conn;
 	if (user_exists($user)) {
 		$user = !(int)$user ? get_user_id($user) : $user;
-		$available_params = ['username', 'email', 'avatar', 'nickname'];
+		$available_params = ['username', 'email', 'nickname', 'coins'];
 		$params = [
 			'username' => 'login',
 			'email' => 'email',
 			'nickname' => 'real_name',
+			'coins' => 'coins',
 		];
-		$qry = $conn->prepare("SELECT `login`,`email`,`real_name` FROM `account`.`account` WHERE id = ?");
+		$qry = $conn->prepare("SELECT `login`,`email`,`real_name`,`coins` FROM `account`.`account` WHERE id = ?");
 		$ret = $qry->execute([$user]);
 
 		if (in_array($par, $available_params)) {
@@ -215,53 +216,83 @@ function getServerStatus() {
 	return $ret;
 }
 
-function getHighscore($start = 1, $stop = 10, $guilds = false)
-	{
-		global $conn;
+function getHighscore($start = 1, $stop = 10, $guilds = false) {
+	global $conn;
 
-		if ($guilds == false) {
-			$return = array();
+	if ($guilds == false) {
+		$return = array();
 
-			$qryGetPlayers = $conn->query("SELECT player.id,player.name,player.level,player.exp,player_index.empire,guild.name AS guild_name
-										  FROM player.player
-										  LEFT JOIN player.player_index
-										  ON player_index.id=player.account_id
-										  LEFT JOIN player.guild_member
-										  ON guild_member.pid=player.id
-										  LEFT JOIN player.guild
-										  ON guild.id=guild_member.guild_id
-										  INNER JOIN account.account
-										  ON account.id=player.account_id
-										  WHERE player.name NOT LIKE '[%]%' AND player.name NOT LIKE '%[%]'  AND player.name NOT LIKE '[%]' AND account.status!='BLOCK'
-										  ORDER BY player.level DESC, player.exp DESC
-										  LIMIT {$start},{$stop}");
-			   $order = 0;
-			while ($p = $qryGetPlayers->fetchObject()) {
-				$order++;
-				$return[$p->id]['order'] = $order;
-				$return[$p->id]['name'] = $p->name;
-				$return[$p->id]['exp'] = $p->exp;
-				$return[$p->id]['empire'] = $p->empire;
-				$return[$p->id]['level'] = $p->level;
-			}
-			return $return;
-		} elseif($guilds == true) {
-			$return = array();
-
-			$qryGetGuilds = $conn->query("SELECT * FROM player.guild ORDER BY ladder_point DESC, level DESC LIMIT {$start},{$stop}");
-				$order = 0;
-			while ($g = $qryGetGuilds->fetchObject()) {
-				$order++;
-				
-				$qryGetGuildEmpire = $conn->query("SELECT empire FROM player.player_index WHERE pid1 = {$g->master} OR pid2 = {$g->master} OR pid3 = {$g->master} OR pid4 = {$g->master}")->fetchObject()->empire;
-				$qryGetGuildMasterName = $conn->query("SELECT name FROM player.player WHERE id = {$g->master}")->fetchObject()->name;
-				$return[$g->id]['order'] = $order;
-				$return[$g->id]['name'] = $g->name;
-				$return[$g->id]['level'] = $g->level;
-				$return[$g->id]['empire'] = $qryGetGuildEmpire;
-				$return[$g->id]['master'] = $qryGetGuildMasterName;
-				$return[$g->id]['points'] = $g->ladder_point;
-			}
-			return $return;	
+		$qryGetPlayers = $conn->query("SELECT player.id,player.name,player.level,player.exp,player_index.empire,guild.name AS guild_name
+									  FROM player.player
+									  LEFT JOIN player.player_index
+									  ON player_index.id=player.account_id
+									  LEFT JOIN player.guild_member
+									  ON guild_member.pid=player.id
+									  LEFT JOIN player.guild
+									  ON guild.id=guild_member.guild_id
+									  INNER JOIN account.account
+									  ON account.id=player.account_id
+									  WHERE player.name NOT LIKE '[%]%' AND player.name NOT LIKE '%[%]'  AND player.name NOT LIKE '[%]' AND account.status!='BLOCK'
+									  ORDER BY player.level DESC, player.exp DESC
+									  LIMIT {$start},{$stop}");
+		   $order = 0;
+		while ($p = $qryGetPlayers->fetchObject()) {
+			$order++;
+			$return[$p->id]['order'] = $order;
+			$return[$p->id]['name'] = $p->name;
+			$return[$p->id]['exp'] = $p->exp;
+			$return[$p->id]['empire'] = $p->empire;
+			$return[$p->id]['level'] = $p->level;
 		}
+		return $return;
+	} elseif($guilds == true) {
+		$return = array();
+
+		$qryGetGuilds = $conn->query("SELECT * FROM player.guild ORDER BY ladder_point DESC, level DESC LIMIT {$start},{$stop}");
+			$order = 0;
+		while ($g = $qryGetGuilds->fetchObject()) {
+			$order++;
+			
+			$qryGetGuildEmpire = $conn->query("SELECT empire FROM player.player_index WHERE pid1 = {$g->master} OR pid2 = {$g->master} OR pid3 = {$g->master} OR pid4 = {$g->master}")->fetchObject()->empire;
+			$qryGetGuildMasterName = $conn->query("SELECT name FROM player.player WHERE id = {$g->master}")->fetchObject()->name;
+			$return[$g->id]['order'] = $order;
+			$return[$g->id]['name'] = $g->name;
+			$return[$g->id]['level'] = $g->level;
+			$return[$g->id]['empire'] = $qryGetGuildEmpire;
+			$return[$g->id]['master'] = $qryGetGuildMasterName;
+			$return[$g->id]['points'] = $g->ladder_point;
+		}
+		return $return;	
 	}
+}
+
+function getCharsForAcc($id)
+{
+	global $conn;
+
+	$qry = $conn->prepare("SELECT player.id, player.name, player.job, player.level, player.playtime, player_index.empire, guild.name AS guild_name FROM `player`.`player` LEFT JOIN player.guild_member ON guild_member.pid=player.id LEFT JOIN player.guild ON guild.id=guild_member.guild_id LEFT JOIN player.player_index ON player_index.id = player.account_id WHERE account_id = ?");
+	$res = $qry->execute([$id]);
+	if ($qry->rowCount() >= 1) {
+		while ($r = $qry->fetchObject()) {
+			$ret[$r->id]['id'] = $r->id;
+			$ret[$r->id]['name'] = $r->name;
+			$ret[$r->id]['job'] = $r->job;
+			$ret[$r->id]['level'] = $r->level;
+			$ret[$r->id]['guild'] = $r->guild_name;
+			$ret[$r->id]['playtime'] = $r->playtime;
+			$ret[$r->id]['empire'] = $r->empire;
+		}
+
+		return $ret;
+	} 
+}
+
+function debugChar($id, $empire)
+{
+	global $conn;
+	global $resetPos;
+
+	$qry = $conn->query("UPDATE player.player SET map_index='".$resetPos[$empire]['map_index']."', x='".$resetPos[$empire]['x']."', y='".$resetPos[$empire]['y']."',     exit_x='".$resetPos[$empire]['x']."', exit_y='".$resetPos[$empire]['y']."', exit_map_index='".$resetPos[$empire]['map_index']."', horse_riding='0' WHERE id={$id} LIMIT 1");
+
+	return $qry;
+}
