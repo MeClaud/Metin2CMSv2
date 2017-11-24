@@ -4,5 +4,5 @@ if(!logged_in()) {redirect(BASE_URI, 'php');}
 ?>
 <div class="well">
 	<legend>Premium</legend>
-	@todo
+	<?= getPremiumPageData() ?>
 </div>

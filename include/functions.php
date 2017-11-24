@@ -3,12 +3,13 @@
 /**
 *	This function loads automatically settings from database and config file
 */
+$valuesDB = ['appname', 'motto', 'forum', 'download-torrent', 'download-torrent-enabled', 'download-direct', 'download-direct-enabled', 'download-mirror', 'download-mirror-enabled'];
 
 function config($val)
 {
 	global $conn;
+	global $valuesDB;
 
-	$valuesDB = ['appname', 'motto', 'forum', 'download-torrent', 'download-torrent-enabled', 'download-direct', 'download-direct-enabled', 'download-mirror', 'download-mirror-enabled'];
 	$valuesCF = [];
 	
 	if (in_array($val, $valuesDB)) {
@@ -72,7 +73,7 @@ function login($user, $password){
 	$qry = $conn->prepare("SELECT `id` FROM `account`.`account` WHERE login = :user AND password = PASSWORD(:pass)");
 	$res = $qry->execute(['user' => $user, 'pass' => $password]);
 
-	if ($res) {
+	if ($qry->rowCount() >= 1) {
 		$_SESSION['id'] = $qry->fetchObject()->id;
 		return true;
 	} else {
@@ -295,4 +296,65 @@ function debugChar($id, $empire)
 	$qry = $conn->query("UPDATE player.player SET map_index='".$resetPos[$empire]['map_index']."', x='".$resetPos[$empire]['x']."', y='".$resetPos[$empire]['y']."',     exit_x='".$resetPos[$empire]['x']."', exit_y='".$resetPos[$empire]['y']."', exit_map_index='".$resetPos[$empire]['map_index']."', horse_riding='0' WHERE id={$id} LIMIT 1");
 
 	return $qry;
+}
+
+function editAccount($userid, $indexVal, $value)
+{
+	global $conn;
+
+	$iList = ['password', 'real_name', 'email'];
+	$encS = ($indexVal == 'password') ? "PASSWORD(" : "";
+	$encs = ($indexVal == 'password') ? ")" : "";
+
+	if (in_array($indexVal, $iList)) {
+		$qry = $conn->prepare("UPDATE `account`.`account` SET `".$indexVal."` = ".$encS.":val".$encs." WHERE  `id`= :id");
+		$res = $qry->execute(['val' => $value, 'id' => $userid]);
+
+		return $res;
+	} else {
+		return false;
+	}
+}
+
+function checkPassword($userid, $password){
+	global $conn;
+
+	$qry = $conn->prepare("SELECT id FROM `account`.`account` WHERE id = ? AND password=PASSWORD(?)");
+	$res = $qry->execute([$userid, $password]);
+	return ($qry->rowCount() >= 1) ? true : false;
+}
+
+function updateSettings($key, $value)
+{
+	global $conn;
+	global $valuesDB;
+
+	if (in_array($key, $valuesDB)) {
+		$qry = $conn->prepare("UPDATE `cms_settings` SET `value` = :val WHERE `name` = :key");
+		$res = $qry->execute(['key' => $key, 'val' => $value]);
+
+		return $res;
+	} else {
+		return false;
+	}
+}
+
+function getPremiumPageData()
+{
+	global $conn;
+	$qry = $conn->prepare("SELECT `key`, `value` FROM `mcms2`.`cms_pages` WHERE  `key`=:key;");
+	$res = $qry->execute(['key' => 'premium']);
+	$res = $qry->fetchObject();
+
+	return $res->value;
+}
+
+function editPageContent($key, $value)
+{
+	global $conn;
+
+	$qry = $conn->prepare("UPDATE `cms_pages` SET `value` = :val WHERE `key` = :key");
+	$res = $qry->execute(['val' => $value, 'key' => $key]);
+
+	return $res;
 }

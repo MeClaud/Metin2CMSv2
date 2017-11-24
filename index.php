@@ -56,6 +56,7 @@
 							<ul class="dropdown-menu">
 								<?php if (logged_in()): ?>
 									<li<?= ($url[0] == 'profile') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>profile/"><i class="fa fa-user"></i> Profile</a></li>
+									<li<?= ($url[0] == 'premium') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>premium/"><i class="fa fa-star"></i> Premium</a></li>
 									<li<?= ($url[0] == 'settings') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>settings/"><i class="fa fa-cog"></i> Account Settings</a></li>
 									<li><a href="?logout"><i class="fa fa-sign-out"></i> Sign Out</a></li>
 									<?php if(is_admin($_SESSION['id'])) { ?><li<?= ($url[0] == 'admin') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>admin/"><i class="fa fa-cogs"></i> Website settings</a></li> <?php } ?>

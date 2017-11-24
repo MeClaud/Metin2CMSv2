@@ -4,10 +4,10 @@
 define('DBHOST', 'localhost');
 define('DBUSER', 'root');
 define('DBPASS', '');
-define('DB', 'mcms');
+define('DB', 'mcms2');
 
 /* Base path of the website */
-define('BASE_URI', 'http://localhost:8080/mCMS/'); 
+define('BASE_URI', 'http://localhost/Metin2CMSv2/'); 
 
 /* Default ports for metin2 server */
 $metin2_ports = [
