@@ -24,3 +24,8 @@ Dupa ce am gasit o serie de probleme in [vechiul meu CMS](https://github.com/MeC
 ![](http://imgur.com/ESLwDfx.png)
 ![](http://imgur.com/JCqjisj.png)
 ![](http://imgur.com/rsUijro.png)
+![](https://imgur.com/YjTNJjJ.png)
+![](https://imgur.com/AxBCq7N.png)
+![](https://imgur.com/eqIg18X.png)
+![](https://imgur.com/GH7LefV.png)
+![](https://imgur.com/YlJLNdH.png)
