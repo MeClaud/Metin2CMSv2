@@ -2,7 +2,9 @@
 
     BETA!! DOAR PENTRU DEVELOPMENT!
 
-Dupa ce am gasit o serie de probleme in [vechiul meu CMS](https://github.com/MeClaud/Metin2CMS), am hotarat sa il refac, de la 0, cu tehnici mai actuale. De aceea va prezint astazi versiunea 2.0. Ea vine cu un design nou si o functionalitate imbunatatita.
+    Updateurile rare sunt dovadă a lipsei mele de timp. Acest proiect este open-source, orice îmbunătățire este binevenită.
+
+Dupa ce am găsit o serie de probleme în [vechiul meu CMS](https://github.com/MeClaud/Metin2CMS), am hotărât să îl refac, de la 0, cu tehnici mai actuale. De aceea vă prezint astăzi versiunea 2.0. Ea vine cu un design nou și o funcționalitate îmbunătățită.
 
 #### Librarii folosite:
 
@@ -13,11 +15,11 @@ Dupa ce am gasit o serie de probleme in [vechiul meu CMS](https://github.com/MeC
 
 #### Pentru instalare:
 
- - Urcati totul pe host
- - Deschideti fisierul include/config.php si completati datele dumneavoastra
- - Baza de date a sitului trebuie sa se afle pe acelasi server mysql cu serverul de metin (Pentru a evita problemele va recomand sa folositi baza de date account a serverului)!
- - Executati fisierul database.sql in baza de date
- - Contul de administrator trebuie sa aiba web_admin >= 1
+ - Urcați totul pe host
+ - Deschideți fișierul include/config.php și completați cu datele dumneavoastră
+ - Baza de date a websiteului trebuie să se afle pe același server mysql cu serverul de metin (Pentru a evita problemele vă recomand să folosiți baza de date account a serverului)!
+ - Executați fișierul database.sql în baza de date
+ - Contul de administrator trebuie să aibă web_admin >= 1
 
 #### Preview:
 ![](http://imgur.com/InDxm5p.png)
