@@ -50,7 +50,7 @@ if ($section == 'guilds') {
 					<td><?= $a ?></td>
 					<td><?= $g['name'] ?></td>
 					<td><?= $g['master'] ?></td>
-					<td><img src="<?= BASE_URI ?>themes/<?=$current_theme?>/img/empires/<?=$g['empire']?>.jpg"?></td>
+					<td><img src="<?= BASE_URI ?>/img/empires/<?=$g['empire']?>.jpg"?></td>
 					<td><?= $g['level'] ?></td>
 					<td><?= $g['points'] ?></td>
 				</tr>
