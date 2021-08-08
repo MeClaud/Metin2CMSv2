@@ -202,26 +202,27 @@ function get_user_info($user, $par){
 	}
 }
 
-/**
-*	This function returns informations about the server
-*	
-*/
 function getServerStatus() {
 	$ret = [];
-	// Status server
-		global $metin2_ports;
-		global $conn;
-		// if (testPort(DBHOST, $metin2_ports['LOGIN']) == true) {
-			$ret['status'] = true;
-		// } else {
-			// $ret['status'] = false;
-		// }
 
-		$online_players = $conn->query("SELECT COUNT(*) AS players FROM player.player WHERE DATE_SUB(NOW(), INTERVAL 1 MINUTE) < last_play;")->fetchObject()->players;
-		$ret['online_players'] =  $online_players;
+	global $serverSettings;
+	global $conn;
+	if ($serverSettings['SERVER_CLOSED']) {
+		$ret['status'] = 'closed';
+	} else {
+		if (testPort(DBHOST, $metin2_ports['LOGIN']) == true) {
+			$ret['status'] = 'online';
+		} else {
+			$ret['status'] = 'offline';
+		}
+	}
+	
+	$online_players = $conn->query("SELECT COUNT(*) AS players FROM player.player WHERE DATE_SUB(NOW(), INTERVAL 1 MINUTE) < last_play;")->fetchObject()->players;
+	$ret['online_players'] =  $online_players;
 
-		$created_accounts = $conn->query("SELECT COUNT(*) AS accounts FROM account.account WHERE status = 'OK'")->fetchObject()->accounts;
-		$ret['accounts'] = $created_accounts;
+	$created_accounts = $conn->query("SELECT COUNT(*) AS accounts FROM account.account WHERE status = 'OK'")->fetchObject()->accounts;
+	$ret['accounts'] = $created_accounts;
+
 	return $ret;
 }
 

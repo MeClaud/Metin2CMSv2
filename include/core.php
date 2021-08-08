@@ -89,3 +89,10 @@ if (isset($_GET['logout'])) {
 	session_destroy();
 	redirect(BASE_URI, 'php');
 }
+
+/**
+ * Widgets info
+ */
+$serverStatus = getServerStatus();
+$top10_players = getHighscore(0, 10, false);
+$top10_guilds = getHighscore(0, 10, true);

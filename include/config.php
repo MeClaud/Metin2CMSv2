@@ -12,7 +12,8 @@ define('BASE_PATH', '/Metin2CMSv2/');
 
 
 /* Default ports for metin2 server */
-$metin2_ports = [
+$serverSettings = [
+	'SERVER_CLOSED' => true,
 	'LOGIN' => 11000,
 	'CH1' => 13001,
 	'CH2' => 13002

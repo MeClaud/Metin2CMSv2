@@ -18,7 +18,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?= $page_title ?></title>
 
-	<link rel="stylesheet" href="<?= BASE_URI ?>css/simplex.css">
+	<link rel="stylesheet" href="<?= BASE_URI ?>css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?= BASE_URI ?>css/custom.css">
 	<link rel="stylesheet" href="<?= BASE_URI ?>css/m2cmsv2.css">
 	<link rel="stylesheet" href="<?= BASE_URI ?>css/font-awesome.css">
@@ -32,37 +32,40 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-default">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navigation" aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a href="<?= BASE_URI ?>" class="navbar-brand"><?= config('appname') ?></a>
-				</div>
-				<div class="collapse navbar-collapse" id="main-navigation">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-xxl">
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<a href="<?= BASE_URI ?>" class="navbar-brand"><?= config('appname') ?></a>
+				<div class="collapse navbar-collapse" id="mainNavbar">
 					<ul class="nav navbar-nav">
-						<li<?= ($url[0] == 'index') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>"><i class="fa fa-home"></i> Home</a></li>
-						<li<?= ($url[0] == 'highscore') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>highscore/"><i class="fa fa-table"></i> Clasament</a></li>
-						<li<?= ($url[0] == 'contact') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>download/"><i class="fa fa-download"></i> Descarcare</a></li>
-						<li<?= ($url[0] == 'contact') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>forum/"><i class="fa fa-users"></i> Comunitate</a></li>
+						<li class="nav-item">
+							<a class="nav-link <?= $url[0] !== 'index' ?: ' active'?>" href="<?= BASE_URI ?>"><i class="fa fa-home"></i> Home</a>
+						</li>
+						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'highscore' ?: ' active'?>" href="<?= BASE_URI ?>highscore/"><i class="fa fa-table"></i> Clasament</a></li>
+						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'download' ?: ' active'?>" href="<?= BASE_URI ?>download/"><i class="fa fa-download"></i> Descarcare</a></li>
+						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'index' ?: ' active'?>" href="<?= BASE_URI ?>forum/"><i class="fa fa-users"></i> Comunitate</a></li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= (!logged_in()) ? 'Guest' : get_user_info($_SESSION['id'], 'nickname') ?> <span class="caret"></span></a>
-							<ul class="dropdown-menu">
+					<ul class="nav navbar-nav justify-content-end">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="user-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<?= (!logged_in()) ? 'Guest' : get_user_info($_SESSION['id'], 'nickname') ?>
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="user-menu">
 								<?php if (logged_in()): ?>
-									<li<?= ($url[0] == 'profile') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>profile/"><i class="fa fa-user"></i> Profile</a></li>
-									<li<?= ($url[0] == 'premium') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>premium/"><i class="fa fa-star"></i> Premium</a></li>
-									<li<?= ($url[0] == 'settings') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>settings/"><i class="fa fa-cog"></i> Account Settings</a></li>
-									<li><a href="?logout"><i class="fa fa-sign-out"></i> Sign Out</a></li>
-									<?php if(is_admin($_SESSION['id'])) { ?><li<?= ($url[0] == 'admin') ? ' class="active"' : '' ?>><a href="<?= BASE_URI ?>admin/"><i class="fa fa-cogs"></i> Website settings</a></li> <?php } ?>
+									<li><a class="dropdown-item <?= $url[0] !== 'profile' ?: ' active'?>" href="<?= BASE_URI ?>profile/"><i class="fa fa-user"></i> Profile</a></li>
+									<li><a class="dropdown-item <?= $url[0] !== 'premium' ?: ' active'?>" href="<?= BASE_URI ?>premium/"><i class="fa fa-star"></i> Premium</a></li>
+									<li><a class="dropdown-item <?= $url[0] !== 'settings' ?: ' active'?>" href="<?= BASE_URI ?>settings/"><i class="fa fa-cog"></i> Account Settings</a></li>
+									<li><a class="dropdown-item" href="?logout"><i class="fa fa-sign-out"></i> Sign Out</a></li>
+									<?php if(is_admin($_SESSION['id'])) { ?>
+									<li>
+										<a class="dropdown-item <?= $url[0] !== 'admin%' ?: ' active'?>" href="<?= BASE_URI ?>admin/"><i class="fa fa-cogs"></i> Website settings</a>
+									</li> 
+									<?php } ?>
 								<?php else: ?>
-									<li><a href="#" data-toggle="modal" data-target="#loginForm"><i class="fa fa-sign-in"></i> Sign In</a></li>
-									<li><a href="#" data-toggle="modal" data-target="#registerForm"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+									<li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginForm"><i class="fa fa-sign-in"></i> Sign In</a></li>
+									<li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#registerForm"><i class="fa fa-user-plus"></i> Sign Up</a></li>
 								<?php endif ?>
 							</ul>
 						</li>
@@ -145,166 +148,177 @@
 			<div class="logo">
 				<img src="<?= BASE_URI ?>img/logo.png" alt="">
 			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="well">
-							<div class="pull-left clock" style="width: 100px;"></div>
-							<div class="pull-right date" style="width: 150px; text-align: right;"></div>
-							<center>
-								<b>
-									<?php 
-										$stats = getServerStatus();
-									?>
-									Jucatori Online: <?= $stats['online_players'] ?> | 
-									<?php if ($stats['status'] === true) {echo '<span class="label label-success">SERVER ONLINE  <i class="fa fa-arrow-up"></i></span></span>';} else {echo '<span class="label label-danger">SERVER OFFLINE <i class="fa fa-arrow-down"></i></span>';}?>
-									 | Conturi create: <?= $stats['accounts'] ?>
-								</b>
-							</center>
+			<div class="container-lg">
+				<div class="row my-2">
+					<div class="col-sm-3 text-center">
+						<div class="card p-3 bg-dark text-light clock"></div>
+					</div>
+					<div class="col-sm-6 text-center">
+						<div class="card p-3 bg-dark text-light">
+							<div class="row">
+								<div class="col-sm-4">Jucatori Online: <?= $serverStatus['online_players'] ?></div>
+								<div class="col-sm-4">
+									<?php if ($serverStatus['status'] == 'online'): ?>
+									<span class="badge bg-success">SERVER ONLINE <i class="fa fa-arrow-up fa-fw"></i></span>
+									<?php elseif ($serverStatus['status'] == 'offline'): ?>
+									<span class="badge bg-danger">SERVER OFFLINE <i class="fa fa-arrow-down fa-fw"></i></span>
+									<?php else: ?>
+									<span class="badge bg-danger">SERVER CLOSED <i class="fa fa-ban fa-fw"></i></span>
+									<?php endif; ?>
+								</div>
+								<div class="col-sm-4">Conturi create: <?= $serverStatus['accounts'] ?></div>	
+							</div>
 						</div>
-						<?php if ($notif['user-exists']): ?>
-							<div class="alert alert-danger">
-								<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
-								Acest nume de utilizator este deja folosit!
-							</div>
-						<?php endif ?>
-						<?php if ($notif['register-passwords-confirmation-failed']): ?>
-							<div class="alert alert-danger">
-								<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
-								Parolele nu corespund!
-							</div>
-						<?php endif ?>
-						<?php if ($notif['register-username-invalid']): ?>
-							<div class="alert alert-danger">
-								<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
-								Campul username nu indeplineste conditiile! <br />
-							</div>
-						<?php endif ?>
-						<?php if ($notif['register-success']): ?>
-							<div class="alert alert-success auto-remove">
-								<strong>Succes!</strong> Inregistrarea s-a realizat cu succes! <br />
-								Va puteti autentifica acum! <br />
-							</div>
-						<?php endif ?>
-						<?php if ($notif['register-failed']): ?>
-							<div class="alert alert-danger">
-								<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
-							</div>
-						<?php endif ?>
-
-						<?php if ($notif['login-success']): ?>
-							<div class="alert alert-success auto-remove">
-								<strong>Succes!</strong> Autentificarea s-a realizat cu succes!
-							</div>
-						<?php endif ?>
-						<?php if ($notif['login-failed']): ?>
-							<div class="alert alert-danger">
-								<strong>Oooops...</strong> Autentificarea nu s-a putut realiza! <br />
-								Parola este incorecta!
-							</div>
-						<?php endif ?>
-						<?php if ($notif['user-is-banned']): ?>
-							<div class="alert alert-danger">
-								<strong>Oooops...</strong> Autentificarea nu s-a putut realiza! <br />
-								Verificati numele de utilizator si parola!
-							</div>
-						<?php endif ?>
-						<?php if ($notif['user-invalid']): ?>
-							<div class="alert alert-danger">
-								<strong>Oooops...</strong> Autentificarea nu s-a putut realiza! <br />
-								Acest cont nu exista!
-							</div>
-						<?php endif ?>
+					</div>
+					<div class="col-sm-3 text-center">
+						<div class="card p-3 bg-dark text-light date"></div>
 					</div>
 				</div>
-				<div class="row">
-			<div class="col-xs-8">
-				<?php require $page_file; ?>	
-			</div>
-				<div class="col-xs-4">
-			<div class="well">
-				<a href="#" data-toggle="modal" data-target="#registerForm" type="button" class="btn btn-success btn-lg btn-block">Joaca acum</a>
-				<a href="<?= config('forum') ?>" type="button" class="btn btn-primary btn-lg btn-block">Comunitate</a>
-				<a href="<?= BASE_URI ?>download/" type="button" class="btn btn-warning btn-lg btn-block">Descarcare</a>
-			</div>
-			<div class="panel panel-default tab-content">
-				<div class="panel-heading">
-					<center><b><i class="fa fa-trophy"></i> Top 10 </b></center>
-				</div>
-				<div role="tabpanel" class="tab-pane active" id="top10-players">
-					<table class="table table-bordered table-responsive table-center" style="margin-bottom: 0px;">
-						<thead>
-							<th class="col-sm-1">#</th>
-							<th class="col-sm-9">Nume</th>
-							<th class="col-sm-1">Nivel</th>
-							<th class="col-sm-1">Regat</th>
-						</thead>
-						<tbody>
-							<?php
-							$top10_players = getHighscore(0, 10, false);
-							$i = 0;
-							foreach($top10_players as $k => $v){
-								$i++;
-									if ($i == 1) {
-										$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
-									} elseif ($i == 2) {
-										$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
-									} elseif ($i == 3) {
-										$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
-									} else {
-										$a = $i;
-										}
-							?>
-								<tr>
-									<td><?= $a ?></td>
-									<td><?= $v['name'] ?></td>
-									<td><?= $v['level'] ?></td>
-									<td><img src="<?= BASE_URI ?>img/empires/<?= $v['empire'] ?>.jpg" width="28px;"></td>
-								</tr>
-							<?php } ?>
-						<tr>
-							<td colspan="4" role="tablist" role="presentation"><a class="btn btn-default btn-sm" href="#top10-guilds" aria-expanded="true" aria-controls="top10-guilds" role="tab" data-toggle="tab">Bresle</a></td>
-						</tr>
-						</tbody>
-					</table>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="top10-guilds">
-					<table class="table table-bordered table-responsive table-center" style="margin-bottom: 0px;">
-						<thead>
-							<th class="col-sm-1">#</th>
-							<th class="col-sm-10">Nume</th>
-							<th class="col-sm-1">Regat</th>
-						</thead>
-						<tbody>
-					<?php
-						$top10_guilds = getHighscore(0, 10, true);
-						$i = 0;
-						foreach($top10_guilds as $k => $v){
-							$i++;
-								if ($i == 1) {
-									$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
-								} elseif ($i == 2) {
-									$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
-								} elseif ($i == 3) {
-									$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
-								} else {
-									$a = $i;
-								}
-					?>
-						<tr>
-							<td><?= $a ?></td>
-							<td><?= $v['name'] ?></td>
-							<td><img src="<?= BASE_URI ?>img/empires/<?= $v['empire'] ?>.jpg" width="28px;"></td>
-						</tr>
-					<?php } ?>
-						<tr>
-							<td colspan="3" role="tablist"><a class="btn btn-default btn-sm" href="#top10-players" aria-controls="top10-players" role="tab" data-toggle="tab">Jucatori</a></td>
-						</tr>
-						</tbody>
-					</table>
+				
+				<?php if ($notif['user-exists']): ?>
+					<div class="alert alert-danger">
+						<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
+						Acest nume de utilizator este deja folosit!
+					</div>
+				<?php endif ?>
+				<?php if ($notif['register-passwords-confirmation-failed']): ?>
+					<div class="alert alert-danger">
+						<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
+						Parolele nu corespund!
+					</div>
+				<?php endif ?>
+				<?php if ($notif['register-username-invalid']): ?>
+					<div class="alert alert-danger">
+						<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
+						Campul username nu indeplineste conditiile! <br />
+					</div>
+				<?php endif ?>
+				<?php if ($notif['register-success']): ?>
+					<div class="alert alert-success auto-remove">
+						<strong>Succes!</strong> Inregistrarea s-a realizat cu succes! <br />
+						Va puteti autentifica acum! <br />
+					</div>
+				<?php endif ?>
+				<?php if ($notif['register-failed']): ?>
+					<div class="alert alert-danger">
+						<strong>Oooops...</strong> Inregistrarea nu s-a putut realiza! <br />
+					</div>
+				<?php endif ?>
+				<?php if ($notif['login-success']): ?>
+					<div class="alert alert-success auto-remove">
+						<strong>Succes!</strong> Autentificarea s-a realizat cu succes!
+					</div>
+				<?php endif ?>
+				<?php if ($notif['login-failed']): ?>
+					<div class="alert alert-danger">
+						<strong>Oooops...</strong> Autentificarea nu s-a putut realiza! <br />
+						Parola este incorecta!
+					</div>
+				<?php endif ?>
+				<?php if ($notif['user-is-banned']): ?>
+					<div class="alert alert-danger">
+						<strong>Oooops...</strong> Autentificarea nu s-a putut realiza! <br />
+						Verificati numele de utilizator si parola!
+					</div>
+				<?php endif ?>
+				<?php if ($notif['user-invalid']): ?>
+					<div class="alert alert-danger">
+						<strong>Oooops...</strong> Autentificarea nu s-a putut realiza! <br />
+						Acest cont nu exista!
+					</div>
+				<?php endif ?>
 				</div>
 			</div>
-		</div>
+		<div class="container-lg">
+			
+			<div class="row">
+				<div class="col-sm-9">
+					<?php require $page_file; ?>	
+				</div>
+				<div class="col-sm-3">		
+					<div class="card bg-dark text-light tab-content text-center">
+						<h5 class="card-header p-2">
+							<i class="fa fa-trophy"></i> Top 10 </b>
+						</h5>
+						<div class="card-body tab-content" id="top-10-tab-content">
+							<div role="tabpanel" class="tab-pane fade show active" id="top10-players">
+								<table class="table text-light">
+									<thead>
+										<th class="col-sm-1">#</th>
+										<th class="col-sm-9">Nume</th>
+										<th class="col-sm-1">Nivel</th>
+										<th class="col-sm-1">Regat</th>
+									</thead>
+									<tbody>
+										<?php
+										$i = 0;
+										foreach($top10_players as $k => $v){
+											$i++;
+												if ($i == 1) {
+													$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
+												} elseif ($i == 2) {
+													$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
+												} elseif ($i == 3) {
+													$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
+												} else {
+													$a = $i;
+													}
+										?>
+											<tr>
+												<td><?= $a ?></td>
+												<td><?= $v['name'] ?></td>
+												<td><?= $v['level'] ?></td>
+												<td><img src="<?= BASE_URI ?>img/empires/<?= $v['empire'] ?>.jpg" width="28px;"></td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="top10-guilds">
+								<table class="table text-light">
+									<thead>
+										<th class="col-sm-1">#</th>
+										<th class="col-sm-10">Nume</th>
+										<th class="col-sm-1">Regat</th>
+									</thead>
+									<tbody>
+									<?php
+										$i = 0;
+										foreach($top10_guilds as $k => $v){
+											$i++;
+												if ($i == 1) {
+													$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
+												} elseif ($i == 2) {
+													$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
+												} elseif ($i == 3) {
+													$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
+												} else {
+													$a = $i;
+												}
+									?>
+									<tr>
+										<td><?= $a ?></td>
+										<td><?= $v['name'] ?></td>
+										<td><img src="<?= BASE_URI ?>img/empires/<?= $v['empire'] ?>.jpg" width="28px;"></td>
+									</tr>
+									<?php } ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="card-footer">
+						<ul class="nav nav-pills nav-fill" role="tablist">
+							<li class="nav-item" role="presentation">
+								<a class="nav-link active" id="top10-players-tab" data-bs-toggle="tab" data-bs-target="#top10-players" aria-current="page" href="#top10-players" role="tab" aria-controls="top10-players" aria-selected="true">Players</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" href="#top10-guilds" id="top10-guilds-tab" data-bs-toggle="tab" data-bs-target="#top10-guilds" aria-current="page" href="#top10-guilds" role="tab" aria-controls="top10-guilds" aria-selected="false">Guilds</a>
+							</li>
+						</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			</div>
 	</main>
@@ -315,7 +329,7 @@
 		</p>
 	</footer>
 	<script src="<?= BASE_URI ?>js/jquery-3.1.1.min.js"></script>
-	<script src="<?= BASE_URI ?>js/bootstrap.js"></script>
+	<script src="<?= BASE_URI ?>js/bootstrap.bundle.min.js"></script>
 	<script src="<?= BASE_URI ?>js/alert.remover.js"></script>
 	<script src="<?= BASE_URI ?>js/tinymce/tinymce.min.js"></script>
 	<script>
