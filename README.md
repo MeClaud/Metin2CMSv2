@@ -6,10 +6,18 @@
 
 Dupa ce am găsit o serie de probleme în [vechiul meu CMS](https://github.com/MeClaud/Metin2CMS), am hotărât să îl refac, de la 0, cu tehnici mai actuale. De aceea vă prezint astăzi versiunea 2.0. Ea vine cu un design nou și o funcționalitate îmbunătățită.
 
+#### Functii noi:
+ - Versiune Beta 0.4:
+    - Corectii texte
+    - Background nou cu tema Metin2
+    - S-a schimbat modul in care este stocat continutul paginilor statice speciale (home si premium) [Mai multe informatii...](https://github.com/MeClaud/Metin2CMSv2/wiki/Continut-Pagini-Speciale)
+    - S-a adaugat pagina pentru administrarea continutului primei pagini
+    - Accesul in `/include/`, `/include/sections`, cat si in `/pages/` a fost restrictionat doar pentru `127.0.0.1`
+
 #### Librarii folosite:
 
  - [Bootstrap 3](https://getbootstrap.com)
- - [FontAwesome](http://fontawesome.io)
+ - [FontAwesome v4.7](http://fontawesome.io)
  - [TinyMCE](https://www.tinymce.com)
  - [JQuery](https://jquery.com)
 
