@@ -355,8 +355,7 @@
 			var mDay = date.getDate();
 			var month = date.getMonth();
 			var year = date.getFullYear();
-
-			var dayNames = ['Dumineca', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata'];
+			var dayNames = ['Duminică', 'Luni', 'marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
 
 			var day = dayNames[day];
 			$(".date").html(day + ', ' + mDay + '/' + month + '/' + year);

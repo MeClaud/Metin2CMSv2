@@ -8,6 +8,8 @@ try {
 	die();
 }
 
+$state = "";
+
 /**
 *	Register
 */

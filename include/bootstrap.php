@@ -40,8 +40,12 @@ switch ($url[0]) {
 		$page_name = 'Panou administrare';
 		$page_file = 'pages/admin_dashboard.php';
 		break;
+	case 'home-admin':
+		$page_name = 'Continut Pagina Home';
+		$page_file = 'pages/admin_home.php';
+		break;
 	case 'premium-admin':
-		$page_name = 'Premium page content';
+		$page_name = 'Continut Pagina Premium';
 		$page_file = 'pages/admin_premium.php';
 		break;
 	case 'website-settings':
@@ -49,7 +53,7 @@ switch ($url[0]) {
 		$page_file = 'pages/admin_settings.php';
 		break;
 	case 'admin-posts':
-		$page_name = 'administrare Postari';
+		$page_name = 'Administrare Postari';
 		$page_file = 'pages/admin_posts.php';
 		break;
 	case 'add-post':

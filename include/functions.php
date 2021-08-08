@@ -347,6 +347,22 @@ function updateSettings($key, $value)
 	}
 }
 
+function getJsonPageContent($page)
+{
+	$json_file = file_get_contents("include/sections/".$page.".json");
+	$json_data = json_decode($json_file, true);
+
+	return base64_decode($json_data['content']);
+}
+
+function updateJsonPageContent($page, $html_content)
+{
+	$json_data = ['content' => base64_encode($html_content)];
+	$json_data = json_encode($json_data);
+	
+	return file_put_contents('include/sections/'.$page.'.json', $json_data);
+}
+
 function getPremiumPageData()
 {
 	global $conn;

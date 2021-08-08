@@ -8,6 +8,8 @@ define('DB', 'mcms2');
 
 /* Base path of the website */
 define('BASE_URI', 'http://localhost/Metin2CMSv2/'); 
+define('BASE_PATH', '/Metin2CMSv2/');
+
 
 /* Default ports for metin2 server */
 $metin2_ports = [

@@ -1,6 +1,7 @@
 body{
-	background: url(../img/background1.jpg) no-repeat #000;
+	background: url(../img/background.jpg) no-repeat #000;
 	background-position: center top;
+	background-size:unset;
 }
 .navbar{
 	box-shadow: 0 0 10px #222;
