@@ -21,8 +21,9 @@ if (isset($_POST['save-settings-trigger'])) {
 
 	if (!empty($_POST['newNickname']) && $set_nickname !== get_user_info($_SESSION['id'], 'nickname')) {
 		$fct1 = editAccount($_SESSION['id'], "real_name", $set_nickname);
-		if ($fct) {
+		if ($fct1) {
 			$notif['nickname-change-success'] = true;
+			redirect("#", 'html', 2);
 		} else {
 			$notif['nickname-change-error'] = true;
 		}

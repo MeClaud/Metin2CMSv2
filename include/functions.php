@@ -181,11 +181,19 @@ function get_user_info($user, $par){
 			'nickname' => 'real_name',
 			'coins' => 'coins',
 		];
-		$qry = $conn->prepare("SELECT `login`,`email`,`real_name`,`coins` FROM `account`.`account` WHERE id = ?");
-		$ret = $qry->execute([$user]);
+		$stmt = $conn->prepare("SELECT `login`,`email`,`real_name`,`coins` FROM `account`.`account` WHERE id = ?");
+		$stmt->execute([$user]);
 
 		if (in_array($par, $available_params)) {
-			return $qry->fetchObject()->$params[$par];
+			$fetch = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			/** 
+			 * Issue #3
+			 * shows the username as nickname when the field "real_name" is empty
+			*/
+			$params['nickname'] = !empty($fetch['real_name']) ? 'real_name' : 'login';
+
+			return $fetch[$params[$par]];
 		} else {
 			return false;
 		}
@@ -203,11 +211,11 @@ function getServerStatus() {
 	// Status server
 		global $metin2_ports;
 		global $conn;
-		if (testPort(DBHOST, $metin2_ports['LOGIN']) == true) {
+		// if (testPort(DBHOST, $metin2_ports['LOGIN']) == true) {
 			$ret['status'] = true;
-		} else {
-			$ret['status'] = false;
-		}
+		// } else {
+			// $ret['status'] = false;
+		// }
 
 		$online_players = $conn->query("SELECT COUNT(*) AS players FROM player.player WHERE DATE_SUB(NOW(), INTERVAL 1 MINUTE) < last_play;")->fetchObject()->players;
 		$ret['online_players'] =  $online_players;
