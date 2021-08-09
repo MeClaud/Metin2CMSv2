@@ -14,7 +14,7 @@ if (isset($_POST['save-settings-trigger'])) {
 	}
 }
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Premium page content <a style="float: right;" href="<?= BASE_URI ?>admin/"><i class="fa fa-arrow-left"></i> Inapoi</a></legend>
 	<?php if ($state == "update-error"): ?>
 		<div class="alert alert-danger alert-dismissable">

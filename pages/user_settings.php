@@ -63,7 +63,7 @@ if (isset($_POST['save-settings-trigger'])) {
 }
 
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Setari cont</legend>
 	<!-- Notifications -->
 	<?php if ($notif['nickname-change-success']): ?>

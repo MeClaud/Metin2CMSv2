@@ -19,7 +19,6 @@
 	<title><?= $page_title ?></title>
 
 	<link rel="stylesheet" href="<?= BASE_URI ?>css/bootstrap.min.css">
-	<link rel="stylesheet" href="<?= BASE_URI ?>css/custom.css">
 	<link rel="stylesheet" href="<?= BASE_URI ?>css/m2cmsv2.css">
 	<link rel="stylesheet" href="<?= BASE_URI ?>css/font-awesome.css">
 
@@ -34,25 +33,26 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container-xxl">
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+				<a href="<?= BASE_URI ?>" class="navbar-brand"><?= config('appname') ?></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<a href="<?= BASE_URI ?>" class="navbar-brand"><?= config('appname') ?></a>
-				<div class="collapse navbar-collapse" id="mainNavbar">
-					<ul class="nav navbar-nav">
+				<div class="collapse navbar-collapse d-flex" id="navbarNav">
+					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
-							<a class="nav-link <?= $url[0] !== 'index' ?: ' active'?>" href="<?= BASE_URI ?>"><i class="fa fa-home"></i> Home</a>
+							<a class="nav-link <?= $url[0] !== 'index' ?: ' active'?>" href="<?= BASE_URI ?>"><i class="fa fa-home fa-fw"></i> Home</a>
 						</li>
-						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'highscore' ?: ' active'?>" href="<?= BASE_URI ?>highscore/"><i class="fa fa-table"></i> Clasament</a></li>
-						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'download' ?: ' active'?>" href="<?= BASE_URI ?>download/"><i class="fa fa-download"></i> Descarcare</a></li>
-						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'index' ?: ' active'?>" href="<?= BASE_URI ?>forum/"><i class="fa fa-users"></i> Comunitate</a></li>
+						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'highscore' ?: ' active'?>" href="<?= BASE_URI ?>highscore/"><i class="fa fa-trophy fa-fw"></i> Clasament</a></li>
+						<li class="nav-item"><a class="nav-link <?= $url[0] !== 'download' ?: ' active'?>" href="<?= BASE_URI ?>download/"><i class="fa fa-download fa-fw"></i> Descarcare</a></li>
+						<li class="nav-item"><a class="nav-link" href="<?= BASE_URI ?>forum/"><i class="fa fa-users"></i> Comunitate</a></li>
 					</ul>
-					<ul class="nav navbar-nav justify-content-end">
+					
+					<ul class="navbar-nav justify-content-end">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="user-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								<?= (!logged_in()) ? 'Guest' : get_user_info($_SESSION['id'], 'nickname') ?>
+								<i class="fa fa-user-circle-o fa-fw"></i> <?= (!logged_in()) ? 'Guest' : get_user_info($_SESSION['id'], 'nickname') ?>
 							</a>
-							<ul class="dropdown-menu" aria-labelledby="user-menu">
+							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="user-menu">
 								<?php if (logged_in()): ?>
 									<li><a class="dropdown-item <?= $url[0] !== 'profile' ?: ' active'?>" href="<?= BASE_URI ?>profile/"><i class="fa fa-user"></i> Profile</a></li>
 									<li><a class="dropdown-item <?= $url[0] !== 'premium' ?: ' active'?>" href="<?= BASE_URI ?>premium/"><i class="fa fa-star"></i> Premium</a></li>
@@ -64,8 +64,8 @@
 									</li> 
 									<?php } ?>
 								<?php else: ?>
-									<li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginForm"><i class="fa fa-sign-in"></i> Sign In</a></li>
-									<li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#registerForm"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+									<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginForm"><i class="fa fa-sign-in"></i> Sign In</a></li>
+									<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerForm"><i class="fa fa-user-plus"></i> Sign Up</a></li>
 								<?php endif ?>
 							</ul>
 						</li>
@@ -76,68 +76,63 @@
 	</header>
 	<main>
 		<!-- MODALS -->
-			<div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="login">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
+			<div class="modal fade" id="loginForm" tabindex="-1" aria-labelledby="login" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content bg-dark text-light">
 						<div class="modal-header"><strong><i class="fa fa-sign-in"></i> Sign In</strong></div>
-						<div class="modal-body">
+						<div class="modal-body p-3">
 							<form method="POST">
-								<div class="form-group">
-									<label for="login-username" class="control-label">Username:</label>
-									<input type="text" class="form-control" id="login-username" name="login-username">
+								<div class="mb-3">
+									<label for="login-username" class="form-label">Username:</label>
+									<input type="text" class="form-control bg-dark text-light border-secondary" id="login-username" name="login-username">
 								</div>
-								<div class="form-group">
-									<label for="login-password" class="control-label">Password:</label>
-									<input type="password" class="form-control" id="login-password" name="login-password">
+								<div class="mb-3">
+									<label for="login-password" class="form-label">Password:</label>
+									<input type="password" class="form-control bg-dark text-light border-secondary" id="login-password" name="login-password">
 								</div>
-								<div class="form-group">
-									<center>
-										<button type="submit" name="login-trigger" class="btn btn-primary"><i class="fa fa-sign-in"></i> Sign In</button>
-									</center>
+								<div class="text-center">
+									<button type="submit" name="login-trigger" class="btn btn-dark border-secondary"><i class="fa fa-sign-in"></i> Sign In</button>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="register">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
+			<div class="modal fade" id="registerForm" tabindex="-1" aria-labelledby="register" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content bg-dark text-light">
 						<div class="modal-header"><strong><i class="fa fa-user-plus"></i> Inregistrare</strong></div>
 						<div class="modal-body">
 							<form method="POST">
-								<div class="form-group">
-									<label for="register-username" class="control-label">Nume utilizator:</label>
-									<input type="text" class="form-control" id="register-username" name="register-username" placeholder="john.smith">
+								<div class="mb-3">
+									<label for="register-username" class="form-label">Nume utilizator:</label>
+									<input type="text" class="form-control bg-dark text-light border-secondary" id="register-username" name="register-username" placeholder="john.smith">
 								</div>
-								<div class="form-group">
-									<label for="register-nickname" class="control-label">Porecla:</label>
-									<input type="text" class="form-control" id="register-nickname" name="register-nickname" placeholder="John Smith">
+								<div class="mb-3">
+									<label for="register-nickname" class="form-label">Porecla:</label>
+									<input type="text" class="form-control bg-dark text-light border-secondary" id="register-nickname" name="register-nickname" placeholder="John Smith">
 								</div>
-								<div class="form-group">
-									<label for="register-email" class="control-label">Your Email:</label>
-									<input type="email" class="form-control" id="register-email" name="register-email" placeholder="john@smith.com">
+								<div class="mb-3">
+									<label for="register-email" class="form-label">Adresa E-Mail:</label>
+									<input type="email" class="form-control bg-dark text-light border-secondary" id="register-email" name="register-email" placeholder="john@smith.com">
 								</div>
-								<div class="form-group">
-									<label for="register-password" class="control-label">Password:</label>
-									<input type="password" class="form-control" id="register-password" name="register-password">
+								<div class="mb-3">
+									<label for="register-password" class="form-label">Parola:</label>
+									<input type="password" class="form-control bg-dark text-light border-secondary" id="register-password" name="register-password">
 								</div>
-								<div class="form-group">
-									<label for="register-password-confirmation" class="control-label">Repeat Password:</label>
-									<input type="password" class="form-control" id="register-password-confirmation" name="register-password-confirmation">
+								<div class="mb-3">
+									<label for="register-password-confirmation" class="form-label">Repeta Parola:</label>
+									<input type="password" class="form-control bg-dark text-light border-secondary" id="register-password-confirmation" name="register-password-confirmation">
 								</div>
-								<div class="form-group">
-									<label for="register-security-core" class="control-label">Cod siguranta caractere:</label>
-									<input type="text" class="form-control" id="register-security-core" name="register-security-core" placeholder="John Smith">
+								<div class="mb-3">
+									<label for="register-security-core" class="form-label">Cod siguranta caractere:</label>
+									<input type="text" class="form-control bg-dark text-light border-secondary" id="register-security-core" name="register-security-core" placeholder="John Smith">
 								</div>
-								<div class="form-group">
-									<center>
-										<button type="submit" name="register-trigger" class="btn btn-primary"><i class="fa fa-user-plus"></i> Register</button>
-									</center>	
-									<ul class="list-unstyled text-right">
-										<li><a href="#" data-toggle="modal" data-target="#registerForm">Ai deja un cont?</a></li>
-										<li><a href="<?= BASE_URI ?>pwreset/">Parola uitata?</a></li>
-									</ul>									
+								<div class="text-center">
+									<button type="submit" name="register-success" class="btn btn-dark border-secondary"><i class="fa fa-user-plus"></i> Inregistrare</button>
+									<ul class="list-unstyled text-start">
+										<li><a href="<?= BASE_URI ?>pwreset/" class="link-light">Parola uitata?</a></li>
+									</ul>
 								</div>
 							</form>
 						</div>
@@ -145,15 +140,15 @@
 				</div>
 			</div>
 			<!-- /MODALS -->
-			<div class="logo">
+			<div class="logo my-5 text-center">
 				<img src="<?= BASE_URI ?>img/logo.png" alt="">
 			</div>
 			<div class="container-lg">
 				<div class="row my-2">
-					<div class="col-sm-3 text-center">
+					<div class="col-sm-3 mb-1 text-center">
 						<div class="card p-3 bg-dark text-light clock"></div>
 					</div>
-					<div class="col-sm-6 text-center">
+					<div class="col-sm-6 mb-1 text-center">
 						<div class="card p-3 bg-dark text-light">
 							<div class="row">
 								<div class="col-sm-4">Jucatori Online: <?= $serverStatus['online_players'] ?></div>
@@ -170,7 +165,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-3 text-center">
+					<div class="col-sm-3 mb-1 text-center">
 						<div class="card p-3 bg-dark text-light date"></div>
 					</div>
 				</div>
@@ -229,92 +224,95 @@
 				<?php endif ?>
 				</div>
 			</div>
-		<div class="container-lg">
-			
+		<div class="container-lg mt-2">
 			<div class="row">
 				<div class="col-sm-9">
 					<?php require $page_file; ?>	
 				</div>
 				<div class="col-sm-3">		
 					<div class="card bg-dark text-light tab-content text-center">
-						<h5 class="card-header p-2">
+						<h5 class="card-header">
 							<i class="fa fa-trophy"></i> Top 10 </b>
 						</h5>
-						<div class="card-body tab-content" id="top-10-tab-content">
-							<div role="tabpanel" class="tab-pane fade show active" id="top10-players">
-								<table class="table text-light">
-									<thead>
-										<th class="col-sm-1">#</th>
-										<th class="col-sm-9">Nume</th>
-										<th class="col-sm-1">Nivel</th>
-										<th class="col-sm-1">Regat</th>
-									</thead>
-									<tbody>
-										<?php
-										$i = 0;
-										foreach($top10_players as $k => $v){
-											$i++;
-												if ($i == 1) {
-													$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
-												} elseif ($i == 2) {
-													$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
-												} elseif ($i == 3) {
-													$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
-												} else {
-													$a = $i;
-													}
-										?>
+						<div class="card-body">
+							<ul class="nav nav-tabs justify-content-center" role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="top10-players-tab" data-bs-toggle="tab" data-bs-target="#top10-players" type="button" role="tab" aria-controls="top10-players" aria-selected="true">Jucatori</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="top10-guilds-tab" data-bs-toggle="tab" data-bs-target="#top10-guilds" type="button" role="tab" aria-controls="top10-guilds" aria-selected="false">Bresle</button>
+								</li>
+							</ul>
+							<div class="tab-content" id="top-10-tab-content">
+								<div class="tab-pane fade show active" id="top10-players" role="tabpanel" aria-labelledby="top10-players">
+									<div class="table-responsive">
+										<table class="table table-bordered text-light">
+											<thead>
+												<th class="col-sm-1">#</th>
+												<th class="col-sm-9">Nume</th>
+												<th class="col-sm-1">Nivel</th>
+												<th class="col-sm-1">Regat</th>
+											</thead>
+											<tbody>
+												<?php
+												$i = 0;
+												foreach($top10_players as $k => $v){
+													$i++;
+														if ($i == 1) {
+															$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
+														} elseif ($i == 2) {
+															$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
+														} elseif ($i == 3) {
+															$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
+														} else {
+															$a = $i;
+															}
+												?>
+													<tr>
+														<td><?= $a ?></td>
+														<td><?= $v['name'] ?></td>
+														<td><?= $v['level'] ?></td>
+														<td><img src="<?= BASE_URI ?>img/empires/<?= $v['empire'] ?>.jpg" width="28px;"></td>
+													</tr>
+												<?php } ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="top10-guilds" role="tabpanel" aria-labelledby="top10-guilds">
+									<div class="table-responsive">
+										<table class="table table-bordered text-light">
+											<thead>
+												<th class="col-sm-1">#</th>
+												<th class="col-sm-10">Nume</th>
+												<th class="col-sm-1">Regat</th>
+											</thead>
+											<tbody>
+											<?php
+												$i = 0;
+												foreach($top10_guilds as $k => $v){
+													$i++;
+														if ($i == 1) {
+															$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
+														} elseif ($i == 2) {
+															$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
+														} elseif ($i == 3) {
+															$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
+														} else {
+															$a = $i;
+														}
+											?>
 											<tr>
 												<td><?= $a ?></td>
 												<td><?= $v['name'] ?></td>
-												<td><?= $v['level'] ?></td>
 												<td><img src="<?= BASE_URI ?>img/empires/<?= $v['empire'] ?>.jpg" width="28px;"></td>
 											</tr>
-										<?php } ?>
-									</tbody>
-								</table>
+											<?php } ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
-							<div role="tabpanel" class="tab-pane fade" id="top10-guilds">
-								<table class="table text-light">
-									<thead>
-										<th class="col-sm-1">#</th>
-										<th class="col-sm-10">Nume</th>
-										<th class="col-sm-1">Regat</th>
-									</thead>
-									<tbody>
-									<?php
-										$i = 0;
-										foreach($top10_guilds as $k => $v){
-											$i++;
-												if ($i == 1) {
-													$a = '<i class="fa fa-trophy" style="color:gold; text-shadow: 0 0 1px black;"></i>';
-												} elseif ($i == 2) {
-													$a = '<i class="fa fa-trophy" style="color:silver; text-shadow: 0 0 1px black;"></i>';
-												} elseif ($i == 3) {
-													$a = '<i class="fa fa-trophy" style="color:orange; text-shadow: 0 0 1px black;"></i>';
-												} else {
-													$a = $i;
-												}
-									?>
-									<tr>
-										<td><?= $a ?></td>
-										<td><?= $v['name'] ?></td>
-										<td><img src="<?= BASE_URI ?>img/empires/<?= $v['empire'] ?>.jpg" width="28px;"></td>
-									</tr>
-									<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="card-footer">
-						<ul class="nav nav-pills nav-fill" role="tablist">
-							<li class="nav-item" role="presentation">
-								<a class="nav-link active" id="top10-players-tab" data-bs-toggle="tab" data-bs-target="#top10-players" aria-current="page" href="#top10-players" role="tab" aria-controls="top10-players" aria-selected="true">Players</a>
-							</li>
-							<li class="nav-item" role="presentation">
-								<a class="nav-link" href="#top10-guilds" id="top10-guilds-tab" data-bs-toggle="tab" data-bs-target="#top10-guilds" aria-current="page" href="#top10-guilds" role="tab" aria-controls="top10-guilds" aria-selected="false">Guilds</a>
-							</li>
-						</ul>
 						</div>
 					</div>
 				</div>
@@ -323,10 +321,10 @@
 			</div>
 	</main>
 	<footer>
-		<p>
-			Copyright &copy; <a href="<?= BASE_URI ?>"><?= config('appname') ?></a> <?= date('Y') ?>. All rights reserved<br>
-			<i class="fa fa-code"></i> cms by <a href="https://meclaud.github.io">MeClaud</a>
-		</p>
+		<div class="text-light text-center">
+			Copyright &copy; <a href="<?= BASE_URI ?>" class="link-light"><?= config('appname') ?></a> <?= date('Y') ?>. All rights reserved<br>
+			<i class="fa fa-code"></i> cms by <a href="https://github.com/MeClaud" class="link-light">MeClaud</a>
+		</div>
 	</footer>
 	<script src="<?= BASE_URI ?>js/jquery-3.1.1.min.js"></script>
 	<script src="<?= BASE_URI ?>js/bootstrap.bundle.min.js"></script>

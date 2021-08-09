@@ -2,7 +2,7 @@
 if(!defined('RETRO_MODE')){exit();}
 if(!logged_in() || !is_admin($_SESSION['id'])) { redirect(BASE_URI, 'php'); }
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Panou administrare</legend>
 	<div class="list-group">
 		<a class="list-group-item active"><i class="fa fa-microchip fa-fw"></i> Core Settings</a>

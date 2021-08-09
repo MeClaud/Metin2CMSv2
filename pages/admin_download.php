@@ -67,7 +67,7 @@ if (isset($_POST['save-settings-trigger'])) {
 	}
 }
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Administrare pagina download <a style="float: right;" href="<?= BASE_URI ?>admin/"><i class="fa fa-arrow-left"></i> Inapoi</a></legend>
 	<!-- Notifications -->
 	<?php if ($notif['update-status-direct-error'] || $notif['update-status-torrent-error'] || $notif['update-status-mirror-error'] || $notif['update-url-direct-error'] || $notif['update-url-torrent-error'] || $notif['update-url-mirror-error']): ?>

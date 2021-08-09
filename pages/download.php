@@ -1,7 +1,7 @@
 <?php
 defined('RETRO_MODE') or exit('Access denied!'); // @ignore
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Descarcare</legend>
 	<center>
 		<h4>Descarca clientul <?= config("appname") ?> gratuit</h4>
@@ -18,7 +18,7 @@ defined('RETRO_MODE') or exit('Access denied!'); // @ignore
 	<hr>
 	<p>Memoria insuficienta a placii grafice de memorie poate duce la pierderea FPS. Configureaza-ti setarile jocului pentru a evita aceasta problema. In cazul in care descarcarea are loc de catre mai multi useri in acelasi timp, aceasta poate fi mai scazuta, de aceea te rugam sa ai rabdare.</p>
 	<legend>Cerinte sistem</legend>
-	<table class="table table-bordered table-center">
+	<table class="table table-bordered text-light">
 			<thead>
 				<th></th>
 				<th>Minim</th>

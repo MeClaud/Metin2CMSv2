@@ -3,39 +3,6 @@ body{
 	background-position: center top;
 	background-size:unset;
 }
-.navbar{
-	box-shadow: 0 0 10px #222;
-	border-radius: 0 !important;
-}
-.well{
-	box-shadow: 0 0 10px #222;
-}
-legend{
-	font-size: 1.2em;
-	margin-bottom: 4px;
-}
-.post p{
-	margin-left: 15px;
-}
-footer{
-	text-align: center;
-	color: #fff;
-	text-shadow: 0 0 10px #bbb;
-}
-.modal-header{
-	font-size: 1.2em !important;
-	text-align: center !important;
-}
-hr{
-	margin-top: 4px;
-	margin-bottom: 4px;
-}
-.author{
-	font-size: .9em;
-	color: #444;
-	font-style: italic;
-	text-align: right;
-}
 .logo{
 	max-width: 250px;
 	margin: auto;
@@ -44,6 +11,7 @@ hr{
 .logo img{
 	width: 100%;
 }
-.table-center *{
-	text-align: center;
+.nav-dark > .active > a, .nav-pills > .active > a:hover {
+    background-color: #000 !important;
+	border-color: --bs-warning;
 }

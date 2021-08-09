@@ -30,7 +30,7 @@ if (isset($_POST['debug-char'])) {
 	</div>
 <?php endif ?>
 
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Panou utilizator</legend>
 	<ul>
 		<li>Nume de utilizator: <?= get_user_info($_SESSION['id'], 'username') ?></li>
@@ -49,37 +49,22 @@ if (isset($_POST['debug-char'])) {
 					3 => 'info'
 				];
 		?>
-		<div class="col-lg-6">
-			<div class="panel panel-<?= $empireClass[$v['empire']] ?> table-center">
-				<div class="panel-heading"><?= $v['name'] ?></div>
-				<table class="table table-bordered table-responsive">
-					<tr>
-						<td colspan="2">
-							<img src="<?= BASE_URI ?>img/classes/<?= $v['job'] ?>.png" alt="">
-						</td>
-					</tr>
-					<tr>
-						<td>Nivel</td>
-						<td><?= $v['level'] ?></td>
-					</tr>
-					<tr>
-						<td>Breasla</td>
-						<td><?= $v['guild'] ?></td>
-					</tr>
-					<tr>
-						<td>Minute jucate</td>
-						<td><?= $v['playtime'] ?></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<form method="POST">
-								<input type="hidden" name="debug-id" value="<?= $v['id'] ?>">
-								<input type="hidden" name="debug-empire" value="<?= $v['empire'] ?>">
-								<button class="btn btn-success" type="submit" name="debug-char">Debug</button>
-							</form>
-						</td>
-					</tr>
-				</table>
+		<div class="col-sm-3">
+			<div class="card bg-dark border-light">
+				<img src="<?= BASE_URI ?>img/classes/<?= $v['job'] ?>.png" class="card-img-top p-5" alt="...">
+				<div class="card-body">
+					<h5 class="card-title"><?= $v['name'] ?></h5>
+					<p class="card-text">
+						<span class="badge bg-primary">Nivel <?= $v['level'] ?></span>
+						<span class="badge bg-danger"><?= $v['guild'] == '' ? 'Fara Breasla' : 'Breasla '.$v['guild'] ?></span>
+						<span class="badge bg-secondary"><?= $v['playtime'] ?> Minute petrecute in joc</span>
+					</p>
+					<form method="POST" class="text-center">
+						<input type="hidden" name="debug-id" value="<?= $v['id'] ?>">
+						<input type="hidden" name="debug-empire" value="<?= $v['empire'] ?>">
+						<button class="btn btn-success btn-sm mt-3" type="submit" name="debug-char">DEBUG</button>
+					</form>
+				</div>
 			</div>
 		</div>
 		<?php } } else { ?>

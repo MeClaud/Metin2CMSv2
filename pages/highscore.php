@@ -9,19 +9,16 @@ $start = ($page-1)*$per_page;
 
 if ($section == 'guilds') {
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend><i class="fa fa-tower"></i> Clasament bresle</legend>
-	<div class="row">
-		<ul class="nav nav-tabs" style="width: 90%; margin: auto;">
-			<li><a href="<?= BASE_URI ?>highscore/players">Jucatori</a></li>
-			<li class="active"><a href="<?= BASE_URI ?>highscore/guilds">Bresle</a></li>
-		</ul>
+	<div class="p-2 text-center">
+		<a class="btn btn-dark border-secondary" href="<?= BASE_URI ?>highscore/players">Jucatori</a>
 	</div>
 	<?php 
 		$qryNumGuilds = $conn->query("SELECT COUNT(*) AS count FROM `player`.`guild`");
 		$maxPages = ceil($qryNumGuilds->fetchObject()->count / $per_page);
 	?>
-	<table class="table table-bordered table-striped table-center">
+	<table class="table table-bordered text-center text-light">
 		<thead>
 			<th>Rang</th>
 			<th>Breasla</th>
@@ -60,18 +57,16 @@ if ($section == 'guilds') {
 	
 </div>
 <?php } else { 
-	$qryNumPlayers = $conn->query("SELECT COUNT(*) AS count FROM `player`.`player`");
-	$maxPages = ceil($qryNumPlayers->fetchObject()->count / $per_page);
+	$qryNumPlayers = $conn->prepare("SELECT `id` FROM `player`.`player`");
+	$qryNumPlayers->execute([]);
+	$maxPages = ceil($qryNumPlayers->rowCount() / $per_page);
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend><i class="fa fa-tower"></i> Clasament jucatori</legend>
-	<div class="row">
-		<ul class="nav nav-tabs" style="width: 90%; margin: auto;">
-			<li class="active"><a href="<?= BASE_URI ?>highscore/players">Jucatori</a></li>
-			<li><a href="<?= BASE_URI ?>highscore/guilds">Bresle</a></li>
-		</ul>
+	<div class="p-2 text-center">
+			<a class="btn btn-dark border-secondary" href="<?= BASE_URI ?>highscore/guilds">Bresle</a></li>
 	</div>
-	<table class="table table-bordered table-striped table-center">
+	<table class="table table-bordered text-center text-light">
 		<thead>
 			<th>Rang</th>
 			<th>Numele Caracterului</th>
@@ -109,22 +104,12 @@ if ($section == 'guilds') {
 <?php } ?>
 
 <!-- PAGINATION -->
-<?php if ($maxPages >> 1): ?>	
-	<center>
-		<ul class="pagination">
-			<li<?= ($page == 1)? ' class="disabled"' : '' ?>>
-				<a href="<?= BASE_URI ?>highscore/<?= $section ?>/<?= $page-1 ?>" aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-			</li>
-			<li class="active">
-				<a href="<?= BASE_URI ?>highscore/<?= $section ?>/<?= $page ?>"><?=$page?></a>
-			</li>
-			<li<?=($page == $maxPages)? ' class="disabled"' : ''?>>
-				<a href="<?= BASE_URI ?>highscore/<?= $section ?>/<?= $page+1 ?>" aria-label="Previous">
-					<span aria-hidden="true">&raquo;</span>
-				</a>
-			</li>
-		</ul>
-	</center>
+<?php if ($maxPages >> 1): ?>
+<div class="p-3 text-center">
+	<div class="btn-group" aria-label="Pagination">
+		<a class="btn btn-dark <?= $page >> 1 ?: ' disabled' ?>" href="<?= BASE_URI ?>highscore/<?= $section ?>/<?= $page-1 ?>"><i class="fa fa-step-backward fa-fw"></i></a>
+		<a class="btn btn-dark" href=""><?= $page ?></a>
+		<a class="btn btn-dark <?= $page <= $maxPages-1 ?: ' disabled' ?>" href="<?= BASE_URI ?>highscore/<?= $section ?>/<?= $page+1 ?>"><i class="fa fa-step-forward fa-fw"></i></a>
+	</div>
+</div>
 <?php endif ?>

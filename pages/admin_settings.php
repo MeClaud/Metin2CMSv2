@@ -38,7 +38,7 @@ if (isset($_POST['settings-save-trigger'])) {
 	}
 }
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Setari website <a style="float: right;" href="<?= BASE_URI ?>admin/"><i class="fa fa-arrow-left"></i> Inapoi</a></legend>
 	<!-- Notifications -->
 	<?php if ($notif['update-appname-error']): ?>

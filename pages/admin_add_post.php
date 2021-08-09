@@ -2,7 +2,7 @@
 if(!defined('RETRO_MODE')){exit();}
 if(!logged_in() || !is_admin($_SESSION['id'])) { redirect(BASE_URI, 'php'); }
 ?>
-<div class="well">
+<div class="card p-4 text-light bg-dark">
 	<legend>Postare noua <a style="float: right;" href="<?= BASE_URI ?>admin/"><i class="fa fa-arrow-left"></i> Inapoi</a></legend>
 	<p>@todo</p>
 </div>
